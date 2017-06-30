@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Solano= ()=> (
-	React.createElement('div', null, 'Solo solito'));
+const Header= ()=> (
+	React.createElement('h1', null, 'Solo solito'));
 
-export default Solano;
+export default Header;

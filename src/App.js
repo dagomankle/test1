@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import Solano from './Components/Header';
+import Header from './Components/Header';
+import Footer from './Components/Footer';
 
 class App extends Component {
   render() {
     return (
        
         React.createElement('div', {className: 'text-center'}, 
-           <Solano/>,
-          React.createElement('div', null, 'HOla hola')
+              <Header/>, //importante para llamar componentes
+              React.createElement('div', null, 'HOla hola'),
+              <Footer copyright="copyright 2017" />
            )
     );
   }
