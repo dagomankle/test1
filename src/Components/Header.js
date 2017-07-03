@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-const Header= ()=> (
+const Headerm= ()=> (
 	React.createElement('h1', null, 'Solo solito'));
 
-export default Header;
+export default Headerm;
