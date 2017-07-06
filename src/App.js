@@ -3,6 +3,7 @@ import Headerm from './Components/Header';
 import Footer from './Components/Footer';
 import SearchBox from './Components/SearchBox';
 import ContactForm from './Components/ContactForm';
+import ContactList from './Components/ContactList';
 
 
 class App extends Component {
@@ -13,6 +14,7 @@ class App extends Component {
           searchText: 'Busqueda',
           firstName:'',
           lastName:'',
+          phone :'',
       };
     }
 
@@ -22,21 +24,21 @@ class App extends Component {
       });
     }
 
-    handleFirstNameChange = (event) =>{
+    handleFirstNameChange=(event)=>{
       this.setState({
         firstName: event.target.value
       });
 
     }
 
-    handleLastNameChange = (event) =>{
+    handleLastNameChange=(event)=>{
       this.setState({
         lastName: event.target.value
       });
 
     }
 
-    handlePhoneChange = (event) =>{
+    handlePhoneChange=(event)=>{
       this.setState({
         phone: event.target.value
       });
@@ -55,23 +57,23 @@ class App extends Component {
                         value={this.state.searchText}
                         onChange={this.handleSearchTextChange}
                       />
+                    <ContactList/>
                   </div>
-                  <div className="col-sm-6">
+                  <div className="col-sm-12">
                     <h1>Nuevo Contacto</h1>
                     <ContactForm
-                      firstName=""
-                      lastName=""
-                      phone=""
-                      handleFirstNameChange = {() => {this.handleFirstNameChange}}
-                      handleLastNameChange = {() => {this.handleLastNameChange}}
-                      handlePhoneChange = {() => {this.handlePhoneChange}}
-
-                    />
+                      vfirstName={this.state.firstName}
+                      vlastName={this.state.lastName}
+                      vphone={this.state.phone}
+                      onFirstNameChange = {this.handleFirstNameChange}
+                      onLastNameChange =  {this.handleLastNameChange}
+                      onPhoneChange =  {this.handlePhoneChange}/>
                   </div>                  
                 </div>
               </div>
               <Footer copyright="copyright 2017" />
             </div>
+          
     );
   }
 }
