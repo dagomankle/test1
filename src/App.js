@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 import Headerm from './Components/Header';
 import Footer from './Components/Footer';
 import SearchBox from './Components/SearchBox';
 import ContactForm from './Components/ContactForm';
 import ContactList from './Components/ContactList';
 
+const API_URL = 
+'https://address-book-api-kfpkagtghu.now.sh'
 
 class App extends Component {
 
@@ -16,6 +20,24 @@ class App extends Component {
           lastName:'',
           phone :'',
       };
+    }
+
+    componentDidMount(){
+      console.log('Mount!');
+      axios({
+          method: 'GET',
+          url: API_URL + '/api/contacts',
+          headers: {
+            'Api-key':'1720074127'            
+          },
+      })
+      .then((response) =>{
+        console.log(response);
+      })
+      .catch((error)=>{
+        console.log(error);
+      })
+
     }
 
     handleSearchTextChange = (event)=>{
@@ -50,27 +72,32 @@ class App extends Component {
     return (
             <div>
               <Headerm/>
-              <div className="container">
-                <div className="row">
-                  <div className="col-sm-6">
-                    <SearchBox 
-                        value={this.state.searchText}
-                        onChange={this.handleSearchTextChange}
-                      />
-                    <ContactList/>
+                <form>
+                  <div className="container">
+                    <div className="form-group row">
+                      <div className="col-sm-6">
+                        <SearchBox 
+                            value={this.state.searchText}
+                            onChange={this.handleSearchTextChange}
+                          />
+                        <ContactList/>
+                      </div>
+                      <div className="col-sm-12">
+                        <h1>Nuevo Contacto</h1>
+                        <ContactForm
+                          vfirstName={this.state.firstName}
+                          vlastName={this.state.lastName}
+                          vphone={this.state.phone}
+                          onFirstNameChange = {this.handleFirstNameChange}
+                          onLastNameChange =  {this.handleLastNameChange}
+                          onPhoneChange =  {this.handlePhoneChange}/>
+                      </div>                  
+                    </div>
                   </div>
-                  <div className="col-sm-12">
-                    <h1>Nuevo Contacto</h1>
-                    <ContactForm
-                      vfirstName={this.state.firstName}
-                      vlastName={this.state.lastName}
-                      vphone={this.state.phone}
-                      onFirstNameChange = {this.handleFirstNameChange}
-                      onLastNameChange =  {this.handleLastNameChange}
-                      onPhoneChange =  {this.handlePhoneChange}/>
-                  </div>                  
-                </div>
-              </div>
+                  <div className="text-center">
+                    <button className="btn btn-primary">Guardar</button>
+                  </div>
+                </form>
               <Footer copyright="copyright 2017" />
             </div>
           
