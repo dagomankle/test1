@@ -8,14 +8,15 @@ import ContactForm from './Components/ContactForm';
 import ContactList from './Components/ContactList';
 
 const API_URL = 
-'https://address-book-api-kfpkagtghu.now.sh'
+'https://address-book-api-kfpkaqtghu.now.sh'
 
 class App extends Component {
 
     constructor(props){
       super(props);
       this.state = {
-          searchText: 'Busqueda',
+          contacts:[],
+          searchText:'Busqueda',
           firstName:'',
           lastName:'',
           phone :'',
@@ -33,6 +34,9 @@ class App extends Component {
       })
       .then((response) =>{
         console.log(response);
+        this.setState({
+          contacts: response.data.data
+        })
       })
       .catch((error)=>{
         console.log(error);
@@ -80,7 +84,9 @@ class App extends Component {
                             value={this.state.searchText}
                             onChange={this.handleSearchTextChange}
                           />
-                        <ContactList/>
+                        <ContactList
+                          contacts={this.state.contacts}
+                        />
                       </div>
                       <div className="col-sm-12">
                         <h1>Nuevo Contacto</h1>
