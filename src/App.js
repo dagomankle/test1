@@ -24,6 +24,11 @@ class App extends Component {
     }
 
     componentDidMount(){
+      this.getContacts();
+
+    }
+
+    getContacts= ()=>{
       console.log('Mount!');
       axios({
           method: 'GET',
@@ -40,8 +45,7 @@ class App extends Component {
       })
       .catch((error)=>{
         console.log(error);
-      })
-
+      })      
     }
 
     handleSearchTextChange = (event)=>{
@@ -71,12 +75,40 @@ class App extends Component {
 
     }
 
+    saveContact = (contact) =>{
+      axios({
+          method: 'POST',
+          url: API_URL + '/api/contacts',
+          headers: {
+            'Api-key':'1716025174',
+            'Content-Type': 'application/json',            
+          },
+          data: {
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            phone: contact.phone,
+          },
+      })
+      .then((response) =>{
+        console.log(response);
+        this.getContacts();
+      })
+      .catch((error)=>{
+        console.log(error);
+      })      
+    }
 
   render() {
+    const contacts = this.state.contacts.filter((contact,index)=>{
+      if(this.state.searchText === contact.firstName){
+        return true;
+      }
+      return false;
+    });
+
     return (
             <div>
               <Headerm/>
-                <form>
                   <div className="container">
                     <div className="form-group row">
                       <div className="col-sm-6">
@@ -85,7 +117,7 @@ class App extends Component {
                             onChange={this.handleSearchTextChange}
                           />
                         <ContactList
-                          contacts={this.state.contacts}
+                          contacts={contacts}
                         />
                       </div>
                       <div className="col-sm-12">
@@ -96,14 +128,12 @@ class App extends Component {
                           vphone={this.state.phone}
                           onFirstNameChange = {this.handleFirstNameChange}
                           onLastNameChange =  {this.handleLastNameChange}
-                          onPhoneChange =  {this.handlePhoneChange}/>
+                          onPhoneChange =  {this.handlePhoneChange}
+                          onSaveContact={this.saveContact}
+                          />
                       </div>                  
                     </div>
                   </div>
-                  <div className="text-center">
-                    <button className="btn btn-primary">Guardar</button>
-                  </div>
-                </form>
               <Footer copyright="copyright 2017" />
             </div>
           
