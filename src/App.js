@@ -75,7 +75,7 @@ class App extends Component {
 
     }
 
-    saveContact = (contact) =>{
+    saveContact = (contact)=>{
       axios({
           method: 'POST',
           url: API_URL + '/api/contacts',
@@ -100,7 +100,15 @@ class App extends Component {
 
   render() {
     const contacts = this.state.contacts.filter((contact,index)=>{
-      if(this.state.searchText === contact.firstName){
+      if(contact.firstName.indexOf(this.state.searchText)>-1){
+        return true;
+      }
+
+      if(contact.lastName.indexOf(this.state.searchText)>-1){
+        return true;
+      }
+
+      if(contact.phone.indexOf(this.state.searchText)>-1){
         return true;
       }
       return false;
@@ -129,7 +137,7 @@ class App extends Component {
                           onFirstNameChange = {this.handleFirstNameChange}
                           onLastNameChange =  {this.handleLastNameChange}
                           onPhoneChange =  {this.handlePhoneChange}
-                          onSaveContact={this.saveContact}
+                          saveContact={this.saveContact}
                           />
                       </div>                  
                     </div>
